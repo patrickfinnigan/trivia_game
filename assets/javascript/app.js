@@ -10,7 +10,10 @@ $(document).ready(function () {
 
 
     var questions = [{
-            prompt: "answer is a\n(a) hey\n(b) what\n(c) hey\n(d) huh",
+            prompt: "answer is a",
+            response: [
+                "(a) hey", "(b) what", "(c) hey", "(d) huh"
+            ],
             answer: "c"
         },
         {
