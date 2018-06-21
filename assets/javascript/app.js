@@ -1,8 +1,12 @@
 //for each question, you have to make an object array of questions 
 $(document).ready(function () {
+
+
+    
     startTimer();
 
-    $(".btn-secondary").text("Submit Answer");
+    $("#submit").show();
+    $("#startOver").hide();
 
     var questions = [{
             prompt: "answer is a",
@@ -28,18 +32,25 @@ $(document).ready(function () {
 
     $(document).ready(function () {
 
+
+        function endGame() {
+            $("#questionsDiv").html("<h1>Game Over<h1>");
+            $("#questionsDiv").append("<h2>You got " + correctAnswers + " out of 9 right</h2>")
+            $("#submit").hide();
+            $("#startOver").show();
+            $("#buttonDisplay").empty();
+        }
+
+        $("#startOver").on("click", function () {
+
+        });
+
         // this function will display the current question and responses
         function displayQuestion() {
             $("#questionsDiv").empty()
             $("ul").empty();
             if (currentQ === questions.length) {
-                $("#questionsDiv").html("<h1>Game Over<h1>");
-                $(".btn-secondary").text("Start Over");
-                $("#buttonDisplay").empty();
-                $("#submit").on("click", function () {
-                    startTimer();
-                    displayQuestion();
-                });
+                endGame();
                 // the following will happen when you reach the end of the questions
             }
             var promptDisplay = $("<h1>")
@@ -75,6 +86,9 @@ $(document).ready(function () {
             $("#questionsLeftTally").text(questionsLeft);
             currentQ++;
             displayQuestion();
+
+
+
         })
         displayQuestion();
     });
@@ -94,10 +108,8 @@ $(document).ready(function () {
 
             if (--timer < 0) {
                 timer = duration;
-            } else if (timer == 0) {
-                $("#questionsDiv").html("<h1>Game Over<h1>");
-                $(".btn-secondary").text("Start Over");
-                $("#buttonDisplay").empty();
+            } else if (timer === 0) {
+                endGame();
             }
 
         }, 1000);
@@ -110,12 +122,21 @@ $(document).ready(function () {
     };
 
 
-    /*     
-        $("questionsDiv").text("Press the Button To Start");
 
-        var startQuiz = function () {
+    /*         $("questionsDiv").append("Press the Button To Start");
 
-        }
+            var startQuiz = function () {
 
-        $("#submit").on("click", startQuiz); */
+            }
+
+            $("#submit").on("click", startQuiz); */
 });
+
+
+
+// things still needing work
+
+// how to make the program play nice with the startup screen
+// how to reset the entire jquery script to the beginning without reloading the page and placing that inside the startOver button
+// reworking the timer so that it doesnt start working one second later than it should and not utilize its code one second sooner than it should
+// how to have cut in screens telling the player if they got the answer right or wrong like in the homework
