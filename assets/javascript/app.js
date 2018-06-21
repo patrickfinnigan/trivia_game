@@ -2,7 +2,7 @@
 $(document).ready(function () {
 
 
-    
+
     startTimer();
 
     $("#submit").show();
@@ -39,6 +39,7 @@ $(document).ready(function () {
             $("#submit").hide();
             $("#startOver").show();
             $("#buttonDisplay").empty();
+            timerStop()
         }
 
         $("#startOver").on("click", function () {
@@ -93,6 +94,9 @@ $(document).ready(function () {
         displayQuestion();
     });
 
+    var intervalId;
+
+    var clockRunning = true;
 
     function startTimer(duration, display) {
         var timer = duration,
@@ -108,11 +112,13 @@ $(document).ready(function () {
 
             if (--timer < 0) {
                 timer = duration;
-            } else if (timer === 0) {
+            } else if (timer == 0) {
                 endGame();
             }
 
         }, 1000);
+
+
     }
 
     window.onload = function () {
@@ -122,6 +128,11 @@ $(document).ready(function () {
     };
 
 
+
+    function timerStop() {
+        clearInterval(intervalId);
+        clockRunning = false;
+    };
 
     /*         $("questionsDiv").append("Press the Button To Start");
 
@@ -139,4 +150,4 @@ $(document).ready(function () {
 // how to make the program play nice with the startup screen
 // how to reset the entire jquery script to the beginning without reloading the page and placing that inside the startOver button
 // reworking the timer so that it doesnt start working one second later than it should and not utilize its code one second sooner than it should
-// how to have cut in screens telling the player if they got the answer right or wrong like in the homework
+// how to stop the timer when submitting the last question
