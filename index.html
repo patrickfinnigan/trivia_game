@@ -32,32 +32,28 @@
         </div>
         <br>
         <div class="card">
-            <div class="card-body question-card">
-                <div>
-                    <h2>
-                        <strong class="question">whats up</strong>
-                    </h2>
+            <div class="card-body">
+                <div id="questionsDiv">
+                    <h1>Click on the Button Below to Start the Quiz</h1>
                 </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optradio">Option 1</label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optradio">Option 2</label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optradio">Option 3</label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optradio">Option 4</label>
-                </div>
-                <br>
+                <ul id="buttonDisplay"></ul>
+                <button id="submit" name="submit" class="btn btn-secondary">Start Quiz</button>
             </div>
         </div>
-
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <p>Correct Answers:
+                    <span id="correctAnswerTally">0</span>
+                </p>
+                <p>Incorrect Answers:
+                    <span id="incorrectAnswerTally">0</span>
+                </p>
+                <p>Questions Left:
+                    <span id="questionsLeftTally">9</span>
+                </p>
+            </div>
+        </div>
     </div>
 </body>
 
