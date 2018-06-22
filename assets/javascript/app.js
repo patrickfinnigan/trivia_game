@@ -1,29 +1,69 @@
 //for each question, you have to make an object array of questions 
 $(document).ready(function () {
 
-
-
-    startTimer();
-
-    $("#submit").show();
+    $("#submit").hide();
     $("#startOver").hide();
+    $("#start").show();
 
     var questions = [{
-            prompt: "answer is a",
+            prompt: "In the Dark Tower III: The Waste Lands, Roland and his Ka Tet escape the city of Lud by boarding this sadistic, riddle-loving train. What was this train's name?",
             response: [
-                "(a) hey", "(b) what", "(c) hey", "(d) huh"
+                "(a) Blaine the Mono", "(b) Atmos MkV Engine", "(c) Thomas The Freight Engine", "(d) Tetsuo Liner"
             ],
             answer: 0
             // 0 is the index of the response array, where 0 is a, 1, is b, etc
         },
         {
-            prompt: "answer is b",
+            prompt: "In the Discworld: Night Watch, the failed revolution of Treacle Mine Road is remembered by wearing...",
             response: [
-                "(a) hey", "(b) what", "(c) hey", "(d) huh"
+                "(a) a rose", "(b) lilac", "(c) lavendar", "(d) a fig leaf"
             ],
             answer: 1
+        },        {
+            prompt: "The belief that everything, including Earth, you, even this quiz game, and especially your memories, were all instantaniously made very recently. This idea is commonly known by this term.",
+            response: [
+                "(a) Sudden Apperance Theory", "(b) The Spotinaity Theory", "(c) The Quick-Start Bang", "(d) Last Thusday-ism"
+            ],
+            answer: 3
+        },        {
+            prompt: "In Jojo's Bizarre Adventure: Vento Aureo, Bruno Bucciarati has the ability to manifest _________ on anything he chooses.",
+            response: [
+                "(a) rocks", "(b) cloth", "(c) zippers", "(d) paper"
+            ],
+            answer: 2
+        },        {
+            prompt: "How do you treat a jellyfish sting?",
+            response: [
+                "(a) use hot water", "(b) use vinegar", "(c) use urine", "(d) use milk"
+            ],
+            answer: 1
+        },        {
+            prompt: "This pokemon is known for having incredible defense.",
+            response: [
+                "(a) Shuckle", "(b) Dunsparce", "(c) Qwilfish", "(d) Stantler"
+            ],
+            answer: 0
+        },        {
+            prompt: "Mariya Takeuchi released her hit single 'Plastic Love', in what year?",
+            response: [
+                "(a) 1994", "(b) 1988", "(c) 1999", "(d) 1984"
+            ],
+            answer: 3
+        },        {
+            prompt: "Which of the following is not like the others?",
+            response: [
+                "(a) glass", "(b) water", "(c) mirror", "(d) vodka"
+            ],
+            answer: 2
+        },        {
+            prompt: "Was this quiz hard?",
+            response: [
+                "(a) Yes", "(b) Yes", "(c) Yes", "(d) Yes"
+            ],
+            answer: 0
         },
     ]
+
 
     var currentQ = 0; // index of current question
     var correctAnswers = 0; //tallies
@@ -32,29 +72,17 @@ $(document).ready(function () {
 
     $(document).ready(function () {
 
-
-        function endGame() {
-            $("#questionsDiv").html("<h1>Game Over<h1>");
-            $("#questionsDiv").append("<h2>You got " + correctAnswers + " out of 9 right</h2>")
-            $("#submit").hide();
-            $("#startOver").show();
-            $("#buttonDisplay").empty();
-            timerStop()
-        }
-
-        $("#startOver").on("click", function () {
-
-        });
-
         // this function will display the current question and responses
         function displayQuestion() {
+            $("#start").hide();
+            $("#submit").show();
             $("#questionsDiv").empty()
             $("ul").empty();
             if (currentQ === questions.length) {
                 endGame();
                 // the following will happen when you reach the end of the questions
             }
-            var promptDisplay = $("<h1>")
+            var promptDisplay = $("<h2>")
 
             promptDisplay.html(questions[currentQ].prompt)
             // populates the html of promptDisplay with the questions array object correlated to the currentQ index number, and then grabs the prompt object inside that question object
@@ -88,20 +116,35 @@ $(document).ready(function () {
             currentQ++;
             displayQuestion();
 
-
-
         })
-        displayQuestion();
+        // displayQuestion();
+        $("#start").on("click", function () {
+            displayQuestion();
+            var threeMinutes = 60 * 3,
+                display = document.querySelector('#time');
+            startTimer(threeMinutes, display);
+        });
+
+        $("#startOver").on("click", function () {
+            currentQ = 0; // index of current question
+            correctAnswers = 0; //tallies
+            incorrectAnswers = 0; //tallies
+            questionsLeft = 9;
+            displayQuestion();
+            var threeMinutes = 60 * 3,
+                display = document.querySelector('#time');
+            startTimer(threeMinutes, display);
+            $("#startOver").hide();
+        });
     });
 
-    var intervalId;
-
-    var clockRunning = true;
+    var setTimer;
 
     function startTimer(duration, display) {
         var timer = duration,
             minutes, seconds;
-        setInterval(function () {
+
+        setTimer = setInterval(function () {
             minutes = parseInt(timer / 60, 10)
             seconds = parseInt(timer % 60, 10);
 
@@ -110,10 +153,14 @@ $(document).ready(function () {
 
             display.textContent = minutes + ":" + seconds;
 
-            if (--timer < 0) {
+            console.log(timer);
+
+
+            if (--timer < -1) {
                 timer = duration;
-            } else if (timer == 0) {
+            } else if (timer === -1) {
                 endGame();
+                console.log("timer equals " + timer)
             }
 
         }, 1000);
@@ -121,33 +168,15 @@ $(document).ready(function () {
 
     }
 
-    window.onload = function () {
-        var threeMinutes = 60 * 3,
-            display = document.querySelector('#time');
-        startTimer(threeMinutes, display);
-    };
-
-
-
-    function timerStop() {
-        clearInterval(intervalId);
+    function endGame() {
+        $("#questionsDiv").html("<h1>Game Over<h1>");
+        $("#questionsDiv").append("<h2>You got " + correctAnswers + " out of 9 right</h2>")
+        $("#submit").hide();
+        $("#startOver").show();
+        $("#buttonDisplay").empty();
+        clearInterval(setTimer);
         clockRunning = false;
-    };
+    }
 
-    /*         $("questionsDiv").append("Press the Button To Start");
 
-            var startQuiz = function () {
-
-            }
-
-            $("#submit").on("click", startQuiz); */
 });
-
-
-
-// things still needing work
-
-// how to make the program play nice with the startup screen
-// how to reset the entire jquery script to the beginning without reloading the page and placing that inside the startOver button
-// reworking the timer so that it doesnt start working one second later than it should and not utilize its code one second sooner than it should
-// how to stop the timer when submitting the last question
